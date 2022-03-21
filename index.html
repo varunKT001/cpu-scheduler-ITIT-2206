@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPU Scheduling</title>
+  </head>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+  ></script>
+  <body>
+    <header class="container mt-3 mb-5">
+      <h1 class="display-3 fw-bold text-center text-dark">💻 CPU Scheduling</h1>
+    </header>
+    <main class="container my-5">
+      <!-- Processes table -->
+      <h1 class="mb-3 display-6 fw-bold text-dark">Input Processes</h1>
+      <table class="table mb-5" id="all-processes">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Process</th>
+            <th scope="col">Arrival Time</th>
+            <th scope="col">Estimate CPU Burst Time</th>
+            <th scope="col">Priority</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <!-- Other options -->
+      <h1 class="mb-3 display-6 fw-bold text-dark">Options</h1>
+      <div class="mb-3" id="other-options">
+        <!-- selecting the scheduling method -->
+        <div class="mb-3">
+          <label class="form-label" for="scheduling-algorithm"
+            >Scheduling algorithm</label
+          >
+          <select
+            class="form-select"
+            id="scheduling-algorithm"
+            aria-label="Default select example"
+          >
+            <option value="fcfs">FCFS</option>
+            <option value="sjf">SJF</option>
+            <option value="priority">Priority</option>
+            <option value="round-robin">Round robin</option>
+          </select>
+        </div>
+
+        <!-- selecting the scheduling method -->
+        <div class="mb-3">
+          <label class="form-label" for="scheduling-mode">Mode</label>
+          <select
+            class="form-select"
+            id="scheduling-mode"
+            aria-label="Default select example"
+          >
+            <option value="preemptive">Preemptive</option>
+            <option value="non-preemptive">Non-preemptive</option>
+          </select>
+        </div>
+
+        <!-- context switching time -->
+        <div class="mb-3">
+          <label for="context-switching-time" class="form-label"
+            >Context switching time</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="context-switching-time"
+            value="0"
+          />
+        </div>
+
+        <!-- time quantum -->
+        <div class="mb-3">
+          <label for="time-quantum" class="form-label">Time quantum</label>
+          <input
+            type="number"
+            class="form-control"
+            id="time-quantum"
+            value="4"
+          />
+        </div>
+      </div>
+
+      <!-- Button schedule processes -->
+      <div class="mb-5">
+        <button type="button" class="btn btn-success" id="schedule-processes">
+          Schedule processes
+        </button>
+
+        <!-- Button clear processes -->
+        <button type="button" class="btn btn-danger" id="clear-processes">
+          Clear all processes
+        </button>
+
+        <!-- Button trigger modal -->
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add new process
+        </button>
+      </div>
+
+      <!-- Output table -->
+      <h1 class="mb-3 display-6 fw-bold text-dark">Output</h1>
+      <table class="table" id="output-table">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Process</th>
+            <th scope="col">Completion Time</th>
+            <th scope="col">Turn Around Time</th>
+            <th scope="col">Waiting Time</th>
+            <th scope="col">Response Time</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </main>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add new process</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Add new process form -->
+            <form>
+              <!-- process name -->
+              <div class="mb-3">
+                <label for="process-name" class="form-label">Name</label>
+                <input
+                  required
+                  class="form-control"
+                  type="text"
+                  id="process-name"
+                />
+              </div>
+              <!-- process name -->
+
+              <!-- process burst time -->
+              <div class="mb-3">
+                <label for="process-burst" class="form-label">Burst Time</label>
+                <input
+                  required
+                  class="form-control"
+                  type="number"
+                  id="process-burst"
+                />
+              </div>
+              <!-- process burst time -->
+
+              <!-- process arival time -->
+              <div class="mb-3">
+                <label for="process-arrival" class="form-label"
+                  >Arrival Time</label
+                >
+                <input
+                  required
+                  class="form-control"
+                  type="number"
+                  id="process-arrival"
+                />
+              </div>
+              <!-- process arrival time -->
+
+              <!-- process priority -->
+              <div class="mb-3">
+                <label for="process-priority" class="form-label"
+                  >Priority</label
+                >
+                <input
+                  required
+                  class="form-control"
+                  type="number"
+                  id="process-priority"
+                />
+              </div>
+              <!-- process priority -->
+            </form>
+            <!-- add new process form -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              id="add-new-process-btn"
+              class="btn btn-primary"
+            >
+              Add process
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50">
+      <div class="container d-flex justify-content-between">
+        <div>
+          <p class="pb-0 mb-0">Made by</p>
+          <p class="link-light">Varun Kumar Tiwari (2020IMT-112)</p>
+        </div>
+        <div>
+          <p class="pb-0 mb-0">Source code</p>
+          <a
+            class="link-light"
+            href="https://github.com/varunKT001/cpu-scheduler-ITIT-2206"
+            >Github</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- including scripts -->
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
