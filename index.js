@@ -76,6 +76,13 @@ function addNewProcess() {
     priority: parseInt(document.querySelector('#process-priority').value),
   };
 
+  // check for duplicate process
+  if (PROCESSES.find((p) => p.name === process.name)) {
+    alert('Process name already taken');
+    return;
+  }
+
+  // check if all the values are correct
   for (let key in process) {
     if (
       process[key] === null ||
@@ -84,6 +91,10 @@ function addNewProcess() {
       isNaN(process[key])
     ) {
       alert('Fill all the details');
+      return;
+    }
+    if (typeof process[key] === 'number' && process[key] < 0) {
+      alert('Negative time not allowed');
       return;
     }
   }
