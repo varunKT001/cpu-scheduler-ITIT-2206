@@ -210,10 +210,9 @@ function calculateAverage(output) {
   );
 
   // calculate average
-  average.averageTurnAroundTime /= output.length;
-  average.averageWaitingTime /= output.length;
-  average.averageResponseTime /= output.length;
-  average.averageCompletionTime /= output.length;
+  for (let key in average) {
+    average[key] = average[key] / output.length;
+  }
 
   // return average
   return average;
