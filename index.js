@@ -77,7 +77,12 @@ function addNewProcess() {
   };
 
   for (let key in process) {
-    if (!process[key]) {
+    if (
+      process[key] === null ||
+      process[key] === undefined ||
+      process[key] === '' ||
+      isNaN(process[key])
+    ) {
       alert('Fill all the details');
       return;
     }
@@ -328,4 +333,13 @@ function clearProcesses() {
 
   // display processes
   displayProcesses();
+}
+
+// function to check if number is NaN
+function isNaN(value) {
+  return (
+    value.toString() === 'NaN' &&
+    typeof value !== 'string' &&
+    typeof value === 'number'
+  );
 }
