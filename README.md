@@ -21,6 +21,6 @@ Implemented CPU Scheduling algorithms using _JavaScript_
 
 ## 👦 Made by
 
-**Name:** _Varun Kumar Tiwari_
+**Name:** Varun Kumar Tiwari
 
-**Roll Number:** _2020IMT-112_
+**Roll Number:** 2020IMT-112
